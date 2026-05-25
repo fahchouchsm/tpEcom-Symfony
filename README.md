@@ -1,4 +1,4 @@
-# Symfony Starter 🚀
+# Fahchouch Store 🚀
 
 Clean Symfony 7 project with **Doctrine ORM**, **Twig**, and **Docker** — ready to use.
 

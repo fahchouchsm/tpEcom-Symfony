@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile - Fahchouch Store{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="/images/profile.png" class="rounded-circle mb-3" alt="User Avatar" width="150" height="150">
+                    <h5 class="card-title">{{ app.user.fullName }}</h5>
+                    <p class="text-muted">{{ app.user.email }}</p>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#profile" class="text-decoration-none">Profile Information</a></li>
+                        <li class="mb-2"><a href="#orders" class="text-decoration-none">My Orders</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none">Settings</a></li>
+                        <li class="mb-2"><a href="{{ path('app_logout') }}" class="text-decoration-none text-danger">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card mb-4" id="profile">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Profile Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="fw-bold">Full Name:</label>
+                            <p>{{ app.user.fullName }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold">Email:</label>
+                            <p>{{ app.user.email }}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="fw-bold">Phone:</label>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold">Member Since:</label>
+                            <p>January 15, 2024</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="fw-bold">Shipping Address:</label>
+                            <p>123 Main Street, Apt 4B<br>New York, NY 10001<br>United States</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary">Edit Profile</button>
+                </div>
+            </div>
+
+            <div class="card" id="orders">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Order History</h5>
+                </div>
+                <div class="card-body">
+                    {% set orders = [
+                        ['ORD-2024-001', 'February 10, 2024', 'Wireless Headphones, Bluetooth Speaker', '$139.98', 'Delivered', 'success', 'View Details'],
+                        ['ORD-2024-002', 'February 5, 2024', 'Classic Leather Jacket', '$149.99', 'In Transit', 'info', 'Track Order'],
+                        ['ORD-2024-003', 'January 28, 2024', 'Yoga Mat, Smart Plant Sensor', '$64.98', 'Processing', 'warning', 'View Details'],
+                        ['ORD-2024-004', 'January 20, 2024', 'Web Development Guide', '$24.99', 'Cancelled', 'danger', 'View Details'],
+                        ['ORD-2024-005', 'January 15, 2024', 'Mechanical Keyboard, Wireless Mouse', '$119.98', 'Delivered', 'success', 'Buy Again']
+                    ] %}
+                    {% for order in orders %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6 class="card-title">Order #{{ order[0] }}</h6>
+                                        <p class="text-muted mb-2">Placed on: {{ order[1] }}</p>
+                                        <p class="mb-1"><strong>Items:</strong> {{ order[2] }}</p>
+                                        <p class="mb-0"><strong>Total:</strong> {{ order[3] }}</p>
+                                    </div>
+                                    <div class="col-md-4 text-md-end">
+                                        <span class="badge bg-{{ order[5] }} mb-2">{{ order[4] }}</span>
+                                        <br>
+                                        <a href="#" class="btn btn-sm btn-outline-primary mt-2">{{ order[6] }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <nav aria-label="Order pagination">
+                        <ul class="pagination justify-content-center mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

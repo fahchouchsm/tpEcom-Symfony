@@ -1,34 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Products{% endblock %}
+{% block title %}Products - Fahchouch Store{% endblock %}
 
 {% block body %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Products <span class="badge bg-secondary">{{ products|length }}</span></h1>
-    <a href="{{ path('product_seed') }}" class="btn btn-success">+ Seed Sample Data</a>
-</div>
+<div class="container my-5">
+    <h1 class="mb-4">Our Products</h1>
 
-{% if products is empty %}
-    <div class="alert alert-info text-center py-5">
-        <h4>No products yet!</h4>
-        <p>Click <strong>"Seed Sample Data"</strong> to add some products.</p>
-    </div>
-{% else %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for product in products %}
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-muted">{{ product.description }}</p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <span class="fs-5 fw-bold text-success">${{ product.price }}</span>
-                        <span class="badge bg-light text-dark">#{{ product.id }}</span>
+    {% if products is empty %}
+        <div class="alert alert-info text-center py-5">
+            <h4>No products yet!</h4>
+            <p><a href="{{ path('product_seed') }}">Seed sample data</a> to add products.</p>
+        </div>
+    {% else %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="/images/{{ product.image ?? 'item.png' }}" class="card-img-top product-img" alt="{{ product.name }}">
+                        <div class="card-body">
+                            {% if product.category %}
+                                {% set badge = product.category.slug == 'fashion' ? 'warning' : (product.category.slug == 'home-garden' ? 'success' : (product.category.slug == 'sports' ? 'info' : (product.category.slug == 'books' ? 'danger' : 'primary'))) %}
+                                <span class="badge bg-{{ badge }} mb-2">{{ product.category.name }}</span>
+                            {% endif %}
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text fw-bold text-success">${{ product.price }}</p>
+                            <a href="{{ path('product_details', {id: product.id}) }}" class="btn btn-outline-primary">View Details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
